@@ -1,21 +1,25 @@
 <template>
   <div id="app">
-    {{ trans.getTranslation('keyboard') }}
+    <!-- {{ trans.getTranslation('keyboard') }} -->
+
+    <Search />
   </div>
 </template>
 
 <script>
-import Translation from "./translation/trans.model"
-
+// import Translation from "./utils/translation/trans.model"
+// import generator from "./utils/perfilGenerator"
+import Search from "./components/Search"
 export default {
   name: 'App',
   data(){
     return {
-      trans: new Translation('pt_BR')
+      // trans: new Translation('pt_BR')
     }
   },
+  components: {Search},
   created(){
-    console.log( this.trans.getTranslation('caixa') );
+    // console.log( generator('Fredeico Messias') );
   }
 }
 </script>
