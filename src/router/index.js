@@ -11,14 +11,24 @@ const routes = [
   },
   {
     path: '/json-csv',
-    name: 'Convert',
+    name: 'convert-json-csv',
     component: () => import('../pages/JSON_CSV.vue')
   },
   {
     path: '/csv-json',
-    name: 'Convert',
+    name: 'convert-csv-json',
     component: () => import('../pages/CSV_JSON.vue')
-  }
+  },
+  {
+    path: '/perfil-generator',
+    name: 'perfil-generator',
+    component: () => import('../pages/PerfilGenerator.vue')
+  },
+  {
+    path: '/elevator',
+    name: 'elevator',
+    component: () => import('../pages/Elevator.vue')
+  },
 ]
 
 const router = new VueRouter({

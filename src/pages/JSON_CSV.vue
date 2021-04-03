@@ -17,6 +17,7 @@
         <div class="wrapper" >
             <textarea rows="15" id="myInput" v-model="output" ></textarea>
             <button @click="copy" > Copy to clipBoard </button>
+            <button @click="download" > gerar link de download </button>
         </div>
     </div>
 </template>
@@ -62,6 +63,14 @@ export default {
             });
 
             reader.readAsText(selectedFile);
+        },
+        download(){
+            let myBlob = new Blob([this.output], {type: 'text/plain;charset=utf-8;'}); // o blob
+            const link = window.document.createElement('a');
+            link.href = window.URL.createObjectURL( myBlob );
+            link.download = 'json_to_csv.csv';
+            link.click();
+            window.URL.revokeObjectURL(link.href);
         }
 
     }
@@ -69,14 +78,4 @@ export default {
 </script>
 
 <style>
-.container {
-    margin: 0 auto;
-    max-width: 1080px;
-}
-.wrapper {
-    display: flex;
-    flex-direction: column;
-
-    margin: 1rem 0;
-}
 </style>
