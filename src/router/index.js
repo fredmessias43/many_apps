@@ -29,6 +29,11 @@ const routes = [
     name: 'elevator',
     component: () => import('../pages/Elevator.vue')
   },
+  {
+    path: '/first-db',
+    name: 'first-db',
+    component: () => import('../pages/DB')
+  },
 ]
 
 const router = new VueRouter({

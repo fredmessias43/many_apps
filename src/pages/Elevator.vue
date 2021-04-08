@@ -130,7 +130,7 @@ pre {
 }
 
 .btns{
-    justify-content: start;
+    justify-content: flex-start;
     display: flex;
     align-items: center;
 }
