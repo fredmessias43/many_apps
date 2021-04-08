@@ -3,4 +3,7 @@
 ## Todo
 
 ### csv-json-json-csv
-- [] make download file
+- [x] make download file
+
+### db app
+- [] make list array or object
