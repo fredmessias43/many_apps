@@ -8,6 +8,7 @@
         <router-link to="/perfil-generator">Perfil Generator</router-link> |
         <router-link to="/elevator">Elevator</router-link> |
         <router-link to="/first-db">First DB</router-link> |
+        <router-link to="/bash">Bash</router-link> |
       </nav>
     </header>
     <main>

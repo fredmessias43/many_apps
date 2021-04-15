@@ -34,6 +34,11 @@ const routes = [
     name: 'first-db',
     component: () => import('../pages/DB')
   },
+  {
+    path: '/bash',
+    name: 'bash',
+    component: () => import('../pages/Bash')
+  },
 ]
 
 const router = new VueRouter({
