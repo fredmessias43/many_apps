@@ -1,83 +1,88 @@
 <template>
-    <div class="container">
-        <label> search string</label>
-        <input type="search" v-model="term">
-        <br>
-        <br>
+  <div class="container">
+    <label> search string</label>
+    <input type="search" v-model="term" />
+    <button @click="search">Search</button>
+    <button @click="reset">Reset Search</button>
+    <br />
+    <br />
 
-        <label>search br</label>
+    <template v-for="(ts,index) in terms_searched">
+      <div class="pill" :key="ts+index">
+        <p>{{ ts }}</p>
+        <button @click="removeTerm(ts,index)">X</button>
+      </div>
+    </template>
+
+    <!--         <label>search by</label>
         <select v-model="term_by">
             <option value="name" >name</option>
             <option value="username" >username</option>
             <option value="email" >email</option>
             <option value="phone" >phone</option>
-        </select>
+        </select> -->
 
-        <br>
-        <br>
+    <br />
+    <br />
 
-        <div v-for="user in users_filtered" :key="user.id" class="box">
-            username: {{user.username}} 
-            <br>
-            name: {{user.name}}
-        </div>
+    Tamanho do array: {{ users.length }}
+    <div v-for="user in users" :key="user.id" class="box">
+      username: {{ user.name }}
+      <br />
+      <img :src="user.url" />
     </div>
+  </div>
 </template>
 
 <script>
-import { filter,capitalize } from "lodash";
+import { partTerm } from "../utils/search";
 export default {
-    data(){
-        return {
-            term: '',
-            term_by: 'name',
-            users: require('../data/users.json')
-        }
+  data() {
+    return {
+      term: "",
+      terms_searched: [],
+      term_by: "name",
+      users: require("../data/users.json"),
+      all_users: require("../data/users.json")
+    };
+  },
+  methods: {
+    search() {
+      this.terms_searched.push(this.term);
+      let new_users = this.restoreFromTerms();
+      this.users = partTerm(new_users, this.term_by, this.term);
+      this.term = "";
     },
-    computed: {
-        users_filtered(){
-            if (this.term === '') {
-                return this.users;
-            }
-
-            const filtered = filter(this.users,(user)=>{
-                return user[this.term_by] === capitalize(this.term);
-            });
-
-            if (filtered.length === 0) {
-                console.log(filtered);
-                return this.users;
-            }
-
-            console.log(filtered);
-            return filtered;
-        },
-        users_filtered_especial(){
-            if (this.term === '') {
-                return this.users;
-            }
-
-            const filtered = filter(this.users,(user)=>{
-                return user[this.term_by] === capitalize(this.term);
-            });
-
-            if (filtered.length === 0) {
-                console.log(filtered);
-                return this.users;
-            }
-
-            console.log(filtered);
-            return filtered;
-        }
+    reset() {
+      this.users = this.all_users;
+      this.term = "";
+      this.terms_searched = [];
     },
-    methods: {
+    removeTerm(term,index) {
+      this.terms_searched.splice(index,1);
+      this.users = this.restoreFromTerms();
+    },
+    restoreFromTerms() {
+      let new_users = this.all_users;
+      for (let i = 0; i < this.terms_searched.length; i++) {
+        new_users = partTerm(new_users, this.term_by, this.terms_searched[i]);
+      }
+      return new_users;
     }
-}
+  }
+};
 </script>
 
 <style>
-.box{
-    border: 1px solid green;
-    margin: 0.5rem;
+.box {
+  border: 1px solid green;
+  margin: 0.5rem;
+}
+.box img {
+  width: 5rem;
+}
+
+.pill {
+  display: flex;
 }
 </style>

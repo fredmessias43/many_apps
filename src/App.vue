@@ -25,6 +25,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+button {
+  cursor: pointer;
+}
 
 #app {
   padding: 1.5rem;
