@@ -7,3 +7,7 @@
 
 ### db app
 - [] make list array or object
+
+
+### elevator
+ - [] make isPassing
