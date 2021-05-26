@@ -9,6 +9,15 @@
         <h1>OR</h1>
         <div class="wrapper"> 
             Input um CSV para Converter 
+            <label >
+              Selecione um tipo de separador
+              <select v-model="spliter">
+                <option value="auto" >auto-detect</option>
+                <option value="," >Virgula</option>
+                <option value=";" >Ponto e Virgula</option>
+                <option value="\n" >Quebra de linha</option>
+              </select>
+            </label>
             <textarea rows="15" v-model="text" ></textarea>
             <button @click="convert" > Converter CSV em JSON</button>
         </div>
@@ -29,13 +38,26 @@ export default {
             text: '',
             file: '',
             output: '',
+            spliter: ';'
         }
     },
     methods: {
         convert(){
-            let all = this.text.split("\n");
-            let headers = all[0].split(',');
-            let bodies = all.splice(1, Number.MAX_VALUE);
+            let all, headers, bodies;
+
+            if (this.spliter === ';' || this.spliter === ',') {
+              all = this.text.split(this.spliter);
+
+              console.log(all.length);
+              headers = all[0].split(',');
+              bodies = all.splice(1, all.length + 1);
+            }
+            if (this.spliter === '\n') {
+              all = this.text.split(this.spliter);
+              console.log(all.length);
+              headers = all[0].split(',');
+              bodies = all.splice(1, all.length + 1);              
+            }
 
             this.output = bodies.map((b)=>{
                 let body = b.split(',');

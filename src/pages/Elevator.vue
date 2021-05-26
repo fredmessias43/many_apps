@@ -87,7 +87,7 @@ export default {
     }
   },
   watch: {
-    call(newCall, oldCall) {
+    call(newCall, oldCall) { 
       this.floors.forEach((floor, i) => {
         setTimeout(() => {
           floor.isHere = i === newCall.floor;
