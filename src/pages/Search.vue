@@ -1,16 +1,18 @@
 <template>
   <div class="container">
-    <label> search string</label>
-    <input type="search" v-model="term" />
-    <button @click="search">Search</button>
+    <form @submit.prevent="search">
+      <label> search string</label>
+      <input type="search" v-model="term" />
+      <button type="submit" >Search</button>
+    </form>
     <button @click="reset">Reset Search</button>
     <br />
     <br />
 
-    <template v-for="(ts,index) in terms_searched">
-      <div class="pill" :key="ts+index">
-        <p>{{ ts }}</p>
-        <button @click="removeTerm(ts,index)">X</button>
+    <template v-for="(term,index) in terms_searched">
+      <div class="pill" :key="term+index">
+        <p>{{ term }}</p>
+        <button @click="removeTerm(term,index)">X</button>
       </div>
     </template>
 
