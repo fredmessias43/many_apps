@@ -39,6 +39,11 @@ const routes = [
     name: 'bash',
     component: () => import('../pages/Bash')
   },
+  {
+    path: '/cdi-simulator',
+    name: 'cdi-simulator',
+    component: () => import('../pages/CDI')
+  },
 ]
 
 const router = new VueRouter({
