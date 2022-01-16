@@ -16,7 +16,7 @@
 
                 <div class="btn-list">
                     <button  @click="downloadSVG"> Baixar em svg </button>
-                    <!-- <button  @click="downloadPNG"> Baixar em png </button> -->
+                    <button  @click="downloadPNG"> Baixar em png </button>
                 </div>
             </div>
 

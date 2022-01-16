@@ -20,7 +20,7 @@
 
 
 ### calculadora de CDI
-- com taxa de xxx% do cdi
-- chamar a api com as taxas anteriores
-- de qual data até qual data
-- calcular mês a mês
+- [x] com taxa de xxx% do cdi
+- [x] chamar a api com as taxas anteriores
+- [x] de qual data até qual data
+- [x] calcular mês a mês
