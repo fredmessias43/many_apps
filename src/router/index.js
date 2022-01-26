@@ -1,9 +1,11 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-
-Vue.use(VueRouter)
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
+  {
+    path: '/',
+    name: 'base',
+    component: () => import('../pages/Test.vue')
+  },
   {
     path: '/search',
     name: 'Search',
@@ -46,8 +48,9 @@ const routes = [
   },
 ]
 
-const router = new VueRouter({
-  routes
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
 })
 
 export default router

@@ -9,8 +9,8 @@
     <br />
     <br />
 
-    <template v-for="(term,index) in terms_searched">
-      <div class="pill" :key="term+index">
+    <template v-for="(term,index) in terms_searched" :key="term+index">
+      <div class="pill">
         <p>{{ term }}</p>
         <button @click="removeTerm(term,index)">X</button>
       </div>
