@@ -1,12 +1,16 @@
 import { filter, capitalize, trim, lowerCase } from 'lodash'
 
+type SearchObject = {
+  [key: string]: string;
+}
+
 // receive array return 
-export function simpleSearch(array,item){
+export function simpleSearch(array: SearchObject[],item: number){
     return array[item];
 }
 
 //search full term
-export function fullTerm(array, index, term){
+export function fullTerm(array: SearchObject[], index: string, term: string){
     if (term === '') {
         return array;
     }
@@ -23,7 +27,7 @@ export function fullTerm(array, index, term){
 }
 
 //search full term
-export function partTerm(array, index, term){
+export function partTerm(array: SearchObject[], index: string, term: string){
     if (term === '') {
         return array;
     }

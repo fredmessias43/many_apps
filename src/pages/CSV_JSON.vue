@@ -30,9 +30,10 @@
     </div>
 </template>
 
-<script>
+<script lang="ts" >
+import { defineComponent } from 'vue';
 import mergeObejct from '../utils/mergeObject';
-export default {
+export default defineComponent({
     data(){
         return {
             text: '',
@@ -43,7 +44,9 @@ export default {
     },
     methods: {
         convert(){
-            let all, headers, bodies;
+            let all = <string[]>[];
+            let headers = <string[]>[];
+            let bodies = <string[]>[];
 
             if (this.spliter === ';' || this.spliter === ',') {
               all = this.text.split(this.spliter);
@@ -59,27 +62,26 @@ export default {
               bodies = all.splice(1, all.length + 1);              
             }
 
-            this.output = bodies.map((b)=>{
+            this.output = JSON.stringify(bodies.map((b)=>{
                 let body = b.split(',');
                 return mergeObejct(headers,body);
-            });
-            this.output = JSON.stringify(this.output)
+            }));
         },
         copy() {
-            let copyText = document.getElementById("myInput");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
+            let copyText = document.querySelector<HTMLTextAreaElement>("#myInput");
+            copyText?.select();
+            copyText?.setSelectionRange(0, 99999);
             document.execCommand("copy");
         },
-        handleFile(e){
+        handleFile(e: any){
             const reader = new FileReader();
             const selectedFile = e.target.files[0];
 
-            reader.addEventListener('load',()=>{
-                this.text = reader.result;
-            });
+            reader.readAsText(selectedFile, 'utf-8');
 
-            reader.readAsText(selectedFile);
+            reader.addEventListener('load',()=>{
+                this.text = JSON.stringify(reader.result);
+            });
         },
         download(){
             //let blobParts = ['{"nome":"Rodrigo","sobrenome":"Aramburu"}'];
@@ -92,7 +94,7 @@ export default {
             window.URL.revokeObjectURL(link.href);
         }
     }
-}
+})
 </script>
 
 <style>

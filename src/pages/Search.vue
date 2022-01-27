@@ -36,9 +36,10 @@
   </div>
 </template>
 
-<script>
-import { partTerm } from "../utils/search";
-export default {
+<script lang="ts" >
+import { defineComponent } from "vue";
+import { partTerm } from "../utils/search/index";
+export default defineComponent({
   data() {
     return {
       term: "",
@@ -60,7 +61,7 @@ export default {
       this.term = "";
       this.terms_searched = [];
     },
-    removeTerm(term,index) {
+    removeTerm(term: string,index: number) {
       this.terms_searched.splice(index,1);
       this.users = this.restoreFromTerms();
     },
@@ -72,7 +73,7 @@ export default {
       return new_users;
     }
   }
-};
+});
 </script>
 
 <style>
