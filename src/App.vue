@@ -1,15 +1,14 @@
 <template>
-  <div id="app">
+  <div class="app">
     <header>
       <nav id="nav">
-        <router-link to="/search">Search Users</router-link> |
-        <router-link to="/json-csv">json to csv</router-link> |
-        <router-link to="/csv-json">csv to json</router-link> |
-        <router-link to="/perfil-generator">Perfil Generator</router-link> |
-        <router-link to="/elevator">Elevator</router-link> |
-        <router-link to="/cdi-simulator">CDI Simulator</router-link> |
-<!--         <router-link to="/first-db">First DB</router-link> |
-        <router-link to="/bash">Bash</router-link> | -->
+        <router-link 
+          v-for="route in routes" 
+          :key="route.name" 
+          :to="route.path"
+        > 
+          {{ route.meta.label }}
+        </router-link> 
       </nav>
     </header>
     <main>
@@ -19,6 +18,15 @@
     </main>
   </div>
 </template>
+
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const $router = useRouter();
+const routes = ref($router.getRoutes());
+
+</script>
 
 <style>
 *{
@@ -31,7 +39,16 @@ button {
 }
 
 #app {
+  height: 100vh;
+}
+.app {
   padding: 1.5rem;
+  height: 100%;
+}
+
+nav a {
+  padding: 0 0.5rem;
+  border-right: 1px solid black;
 }
 
 .container {

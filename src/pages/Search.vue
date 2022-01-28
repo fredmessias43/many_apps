@@ -43,7 +43,7 @@ export default defineComponent({
   data() {
     return {
       term: "",
-      terms_searched: [],
+      terms_searched: <string[]>[],
       term_by: "name",
       users: require("../data/users.json"),
       all_users: require("../data/users.json")
