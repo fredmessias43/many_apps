@@ -5,7 +5,8 @@
       <input type="search" v-model="term" />
       <button type="submit" >Search</button>
     </form>
-    <button @click="reset">Reset Search</button>
+    <button @click="reset">Reset Search</button> 
+
     <br />
     <br />
 

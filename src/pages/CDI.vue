@@ -35,6 +35,33 @@
     </form>
 
 
+    <table>
+      <thead>
+        <tr>
+          <td>mes</td>
+          <td>anterior</td>
+          <td>cdi</td>
+          <td>calculado</td>
+          <td>adicionado</td>
+          <td>calculado</td>
+          <td>total</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="t in totalArray" >
+          <td> {{ t.date.split("/")[1] }}</td>
+          <td> {{ t.previousTotal }}</td>
+          <td> {{ t.cdi }}</td>
+          <td> {{ t.calcutatedTotal }}</td>
+          <td> {{ t.perMonth }}</td>
+          <td> {{ t.calcutatedTotalAfterPlus }}</td>
+          <td> {{ t.total }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+
     {{ total }}
   </div>
 
@@ -48,16 +75,17 @@ export default {
       bankPercentage: 100,
       cdi: 0.5,
       initialValue: 100,
-      valuePerMonth: 0,
-      dataInicial: "2020-01-10",
-      dataFinal: "2020-02-10",
+      valuePerMonth: 100,
+      dataInicial: "2021-01-02",
+      dataFinal: "2022-01-01",
 
-      total: ""
+      total: "",
+      totalArray: []
     }
   },
   computed: {
     //total() {
-    //  return this.initialValue *  ( this.cdi * (this.bankPercentage / 100) / 100 )
+    //  return this.initialValue *  ( this.cdi * auxBankPerc / 100 )
     //}
   },
   methods: {
@@ -75,31 +103,80 @@ export default {
     },
     async calculateCDI()
     {
+      this.totalArray = [];
+
       let pseudoTotal = 0;
       let cdiPerMonth = await this.getCDI();
-      console.log(cdiPerMonth);
+      // console.log(cdiPerMonth);
 
-      const firstCDI = cdiPerMonth[0].valor;
-      
+      const firstCdi = cdiPerMonth[0].valor;
+      const firstDate = cdiPerMonth[0].data;
+
       pseudoTotal = Number(this.initialValue);
-      pseudoTotal += this.initialValue *  ( firstCDI * (this.bankPercentage / 100) / 100 );
+
+      const firstCalcutatedTotal = this.cdiCalc( pseudoTotal, this.bankPercentage, firstCdi );
+
+      pseudoTotal = firstCalcutatedTotal;
+
+      this.totalArray.push({
+        value: pseudoTotal,
+        text: (pseudoTotal.toFixed(3)).toString(),
+        date: firstDate,
+
+        cdi: firstCdi,
+        previousTotal: 0,
+        calcutatedTotal: firstCalcutatedTotal.toFixed(3),
+        perMonth: 0,
+        calcutatedTotalAfterPlus: firstCalcutatedTotal.toFixed(3),
+        total: pseudoTotal,
+      });
 
       // calcular com o resto do array
       /* const deletedItems = */ cdiPerMonth.splice(0, 1);
       for (let i = 0; i < cdiPerMonth.length; i++) {
         const cdi = cdiPerMonth[i].valor;
+        const date = cdiPerMonth[i].data;
 
-        pseudoTotal = pseudoTotal + Number(this.valuePerMonth);
-        pseudoTotal += pseudoTotal * ( cdi * (this.bankPercentage / 100) / 100 );
+        const previousTotal = pseudoTotal;
+
+        const calcutatedTotal = this.cdiCalc( pseudoTotal, this.bankPercentage, cdi );
+
+        const calcutatedTotalAfterPlus = calcutatedTotal + Number(this.valuePerMonth);
         
+        pseudoTotal = calcutatedTotalAfterPlus;
+
+        this.totalArray.push({
+          text: `${calcutatedTotal.toFixed(3)} + ${this.valuePerMonth} = ${pseudoTotal.toFixed(3)}` ,
+          date: date,
+          cdi,
+
+          previousTotal: previousTotal.toFixed(3),
+          calcutatedTotal: calcutatedTotal.toFixed(3),
+          perMonth: this.valuePerMonth,
+          calcutatedTotalAfterPlus: calcutatedTotalAfterPlus.toFixed(3),
+          total: pseudoTotal.toFixed(3),
+        });
       }
 
       this.total = pseudoTotal.toFixed(3);
+    },
+    cdiCalc( value, percentage, cdi ) {
+      // 500 * ( 1 + ( 1.01 * 0.83 ) / 100 )
+      const auxPercentage = percentage / 100;
+      return value * ( 1 + ( auxPercentage * cdi ) / 100 )
     }
   }
 }
 </script>
 
 <style>
+table {
+  width: 100%;
+  border-collapse: collapse;
 
+}
+td {
+  padding-top: 20px;
+  border-bottom: 1px solid;
+}
 </style>
