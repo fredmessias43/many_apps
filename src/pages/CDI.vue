@@ -43,26 +43,29 @@
           <td>cdi</td>
           <td>calculado</td>
           <td>adicionado</td>
-          <td>calculado</td>
-          <td>total</td>
+          <td>total por mês</td>
         </tr>
       </thead>
       <tbody>
         <tr v-for="t in totalArray" >
-          <td> {{ t.date.split("/")[1] }}</td>
+          <td> {{ t.date.split("/")[1] +"/"+ t.date.split("/")[2].substring(2) }}</td>
           <td> {{ t.previousTotal }}</td>
-          <td> {{ t.cdi }}</td>
-          <td> {{ t.calcutatedTotal }}</td>
-          <td> {{ t.perMonth }}</td>
-          <td> {{ t.calcutatedTotalAfterPlus }}</td>
+          <td> {{ t.cdi }}%</td>
+          <td> + {{ t.evaluated }}</td>
+          <td> + {{ t.perMonth }}</td>
           <td> {{ t.total }}</td>
         </tr>
       </tbody>
+      <tfoot v-if="total" >
+        <tr>
+          <td colspan="3" ></td>
+          <td> + {{ totalArray.reduce((e,f) => Number(e) + Number(f.evaluated), 0).toFixed(3) }} </td>
+          <td> + {{ ( totalArray.reduce((e,f) => Number(e) + Number(f.perMonth), 0) - initialValue).toFixed(3)  }} </td>
+          <td> {{ total }} </td>
+        </tr>
+      </tfoot>
     </table>
 
-    <br>
-
-    {{ total }}
   </div>
 
 
@@ -90,7 +93,7 @@ export default {
   },
   methods: {
     async getCDI() {
-      //const codigo_serie = 11; // acumulada por dia
+      // const codigo_serie = 11; // acumulada por dia
       const codigo_serie = 4390; // acumulada por mes
       const dataInicial = new Date(this.dataInicial).toLocaleDateString('pt-BR');
       const dataFinal = new Date(this.dataFinal).toLocaleDateString('pt-BR');
@@ -114,10 +117,6 @@ export default {
 
       pseudoTotal = Number(this.initialValue);
 
-      const firstCalcutatedTotal = this.cdiCalc( pseudoTotal, this.bankPercentage, firstCdi );
-
-      pseudoTotal = firstCalcutatedTotal;
-
       this.totalArray.push({
         value: pseudoTotal,
         text: (pseudoTotal.toFixed(3)).toString(),
@@ -125,35 +124,36 @@ export default {
 
         cdi: firstCdi,
         previousTotal: 0,
-        calcutatedTotal: firstCalcutatedTotal.toFixed(3),
-        perMonth: 0,
-        calcutatedTotalAfterPlus: firstCalcutatedTotal.toFixed(3),
-        total: pseudoTotal,
+        evaluated: 0,
+        evaluatedTotal: pseudoTotal.toFixed(3),
+        perMonth: pseudoTotal.toFixed(3),
+        evaluatedTotalAfterMonthValue: pseudoTotal.toFixed(3),
+        total: pseudoTotal.toFixed(3),
       });
 
-      // calcular com o resto do array
-      /* const deletedItems = */ cdiPerMonth.splice(0, 1);
+      // calcular com o array
       for (let i = 0; i < cdiPerMonth.length; i++) {
         const cdi = cdiPerMonth[i].valor;
         const date = cdiPerMonth[i].data;
 
         const previousTotal = pseudoTotal;
 
-        const calcutatedTotal = this.cdiCalc( pseudoTotal, this.bankPercentage, cdi );
-
-        const calcutatedTotalAfterPlus = calcutatedTotal + Number(this.valuePerMonth);
+        const evaluated = this.cdiCalc( pseudoTotal, this.bankPercentage, cdi );
+        const evaluatedTotal = pseudoTotal + evaluated;
+        const evaluatedTotalAfterMonthValue = cdiPerMonth.length === 1 ? evaluatedTotal : evaluatedTotal + Number(this.valuePerMonth);
         
-        pseudoTotal = calcutatedTotalAfterPlus;
+        pseudoTotal = evaluatedTotalAfterMonthValue;
 
         this.totalArray.push({
-          text: `${calcutatedTotal.toFixed(3)} + ${this.valuePerMonth} = ${pseudoTotal.toFixed(3)}` ,
+          text: `${evaluatedTotal.toFixed(3)} + ${this.valuePerMonth} = ${pseudoTotal.toFixed(3)}` ,
           date: date,
           cdi,
 
           previousTotal: previousTotal.toFixed(3),
-          calcutatedTotal: calcutatedTotal.toFixed(3),
-          perMonth: this.valuePerMonth,
-          calcutatedTotalAfterPlus: calcutatedTotalAfterPlus.toFixed(3),
+          evaluated: evaluated.toFixed(3),
+          evaluatedTotal: evaluatedTotal.toFixed(3),
+          perMonth: cdiPerMonth.length === 1 ? 0 :this.valuePerMonth.toFixed(3),
+          evaluatedTotalAfterMonthValue: evaluatedTotalAfterMonthValue.toFixed(3),
           total: pseudoTotal.toFixed(3),
         });
       }
@@ -161,9 +161,9 @@ export default {
       this.total = pseudoTotal.toFixed(3);
     },
     cdiCalc( value, percentage, cdi ) {
-      // 500 * ( 1 + ( 1.01 * 0.83 ) / 100 )
+      // 500 * ( ( 1.01 * 0.83 ) / 100 )
       const auxPercentage = percentage / 100;
-      return value * ( 1 + ( auxPercentage * cdi ) / 100 )
+      return value * ( ( auxPercentage * cdi ) / 100 )
     }
   }
 }
