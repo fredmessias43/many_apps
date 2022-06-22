@@ -1,79 +1,87 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from "vue-router"
 
 const routes = [
   {
-    path: '/',
-    name: 'base',
+    path: "/",
+    name: "base",
     meta: {
       label: "Base"
     },
-    component: () => import('../pages/Test.vue')
+    component: () => import("../pages/Test.vue")
   },
   {
-    path: '/search',
-    name: 'search',
+    path: "/search",
+    name: "search",
     meta: {
       label: "Search users"
     },
-    component: () => import('../pages/Search.vue')
+    component: () => import("../pages/Search.vue")
   },
   {
-    path: '/json-csv',
-    name: 'convert-json-csv',
+    path: "/json-csv",
+    name: "convert-json-csv",
     meta: {
       label: "JSON converter to CSV"
     },
-    component: () => import('../pages/JSON_CSV.vue')
+    component: () => import("../pages/JSON_CSV.vue")
   },
   {
-    path: '/csv-json',
-    name: 'convert-csv-json',
+    path: "/csv-json",
+    name: "convert-csv-json",
     meta: {
       label: "CSV converter to JSON"
     },
-    component: () => import('../pages/CSV_JSON.vue')
+    component: () => import("../pages/CSV_JSON.vue")
   },
   {
-    path: '/perfil-generator',
-    name: 'perfil-generator',
+    path: "/perfil-generator",
+    name: "perfil-generator",
     meta: {
       label: "Perfil Generator"
     },
-    component: () => import('../pages/PerfilGenerator.vue')
+    component: () => import("../pages/PerfilGenerator.vue")
   },
   {
-    path: '/elevator',
-    name: 'elevator',
+    path: "/elevator",
+    name: "elevator",
     meta: {
       label: "Elevator"
     },
-    component: () => import('../pages/Elevator.vue')
+    component: () => import("../pages/Elevator.vue")
   },
   // {
-  //   path: '/first-db',
-  //   name: 'first-db',
-  //   component: () => import('../pages/DB')
+  //   path: "/first-db",
+  //   name: "first-db",
+  //   component: () => import("../pages/DB")
   // },
   // {
-  //   path: '/bash',
-  //   name: 'bash',
-  //   component: () => import('../pages/Bash')
+  //   path: "/bash",
+  //   name: "bash",
+  //   component: () => import("../pages/Bash")
   // },
   {
-    path: '/cdi-simulator',
-    name: 'cdi-simulator',
+    path: "/cdi-simulator",
+    name: "cdi-simulator",
     meta: {
       label: "CDI simulator"
     },
-    component: () => import('../pages/CDI')
+    component: () => import("../pages/CDI")
   },
   {
-    path: '/grid',
-    name: 'grid',
+    path: "/grid",
+    name: "grid",
     meta: {
       label: "Grid Areas"
     },
-    component: () => import('../pages/Grid')
+    component: () => import("../pages/Grid")
+  },
+  {
+    path: "/drag-drop",
+    name: "drag-drop",
+    meta: {
+      label: "Drag Drop"
+    },
+    component: () => import("../pages/DragDrop/Index.vue")
   },
 ]
 
