@@ -12,8 +12,7 @@
 </template>
 
 <script setup>
-import { createElementVNode, h, onMounted, ref, useSlots } from 'vue';
-import { VueElementConstructor } from 'vue';
+// import { createElementVNode, h, onMounted, ref, useSlots } from 'vue';
 
 const props = defineProps({
   data: String,
@@ -22,7 +21,7 @@ const emit = defineEmits([
   "dragend"
 ]);
 
-const slots = useSlots();
+// const slots = useSlots();
 
 function handledrag(e) {}
 function handledragend(e) {}

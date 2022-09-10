@@ -83,6 +83,14 @@ const routes = [
     },
     component: () => import("../pages/DragDrop/Index.vue")
   },
+  {
+    path: "/clock",
+    name: "clock",
+    meta: {
+      label: "Clock"
+    },
+    component: () => import("../pages/Clock.vue")
+  },
 ]
 
 const router = createRouter({
