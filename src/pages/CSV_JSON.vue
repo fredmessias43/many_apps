@@ -50,7 +50,6 @@ export default defineComponent({
 
             if (this.spliter === ';' || this.spliter === ',') {
               all = this.text.split(this.spliter);
-
               console.log(all.length);
               headers = all[0].split(',');
               bodies = all.splice(1, all.length + 1);

@@ -91,6 +91,22 @@ const routes = [
     },
     component: () => import("../pages/Clock.vue")
   },
+  {
+    path: "/stack-trace",
+    name: "stack-trace",
+    meta: {
+      label: "StackTrace"
+    },
+    component: () => import("../pages/StackTrace.vue")
+  },
+  {
+    path: "/dynamic-icons",
+    name: "dynamic-icons",
+    meta: {
+      label: "Dynamic Icons"
+    },
+    component: () => import("../pages/DynamicIcons.vue")
+  },
 ]
 
 const router = createRouter({
