@@ -30,3 +30,10 @@
 - [ ] 2 areas que podem ser aumentadas e dimunuídas de tamanho
 - [ ] fazer com q possa adicionar mais areas
 - [ ] poder adicionar areas aninhadas
+
+
+### bingo 
+- [ ] adicionar mais cartelas
+- [ ] adicionar animações
+- [ ] mover pra outro repo e subr ele sozinho 
+- [ ] adcionar multiplayer

@@ -107,6 +107,14 @@ const routes = [
     },
     component: () => import("../pages/DynamicIcons.vue")
   },
+  {
+    path: "/bingo",
+    name: "bingo",
+    meta: {
+      label: "Bingo"
+    },
+    component: () => import("../pages/Bingo/Index.vue")
+  },
 ]
 
 const router = createRouter({
